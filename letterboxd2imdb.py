@@ -15,7 +15,7 @@ from tqdm import tqdm
 imdb_cookie = ""
 
 # Define global headers to ensure consistent browser impersonation across all requests
-CHROME_HEADERS = {
+BROWSER_HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept": "application/json, text/plain, */*",
     "Accept-Language": "en-US,en;q=0.9",
@@ -70,7 +70,7 @@ def read_zip(filename):
 
 
 def get_imdb_id(letterboxd_uri):
-    resp = requests.get(letterboxd_uri, headers=CHROME_HEADERS)
+    resp = requests.get(letterboxd_uri, headers=BROWSER_HEADERS)
     if resp.status_code != 200:
         return None
 
@@ -92,7 +92,7 @@ def rate_on_imdb(imdb_id, rating):
         }
     }
     
-    headers = CHROME_HEADERS.copy()
+    headers = BROWSER_HEADERS.copy()
     headers.update({
         "content-type": "application/json",
         "cookie": imdb_cookie
@@ -121,7 +121,7 @@ def rate_on_imdb(imdb_id, rating):
 
 
 def add_to_imdb_watchlist(imdb_id):
-    headers = CHROME_HEADERS.copy()
+    headers = BROWSER_HEADERS.copy()
     headers.update({
         "content-type": "application/json",
         "cookie": imdb_cookie
@@ -159,7 +159,7 @@ def create_imdb_list(list_name, description=""):
         }
     }
 
-    headers = CHROME_HEADERS.copy()
+    headers = BROWSER_HEADERS.copy()
     headers.update({
         "content-type": "application/json",
         "cookie": imdb_cookie
@@ -202,7 +202,7 @@ def add_to_imdb_list(imdb_id, list_id):
             }
         }
     }
-    headers = CHROME_HEADERS.copy()
+    headers = BROWSER_HEADERS.copy()
     headers.update({
         "content-type": "application/json",
         "cookie": imdb_cookie
@@ -231,7 +231,7 @@ def add_to_imdb_list(imdb_id, list_id):
 
 def get_user_lists_from_profile():
     """Get user lists by parsing the main IMDb profile page"""
-    headers = CHROME_HEADERS.copy()
+    headers = BROWSER_HEADERS.copy()
     headers.update({
         "Cookie": imdb_cookie,
         "Upgrade-Insecure-Requests": "1"
